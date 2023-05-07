@@ -1,35 +1,35 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/
 
 public class leetcode3{
-    public static boolean hasDuplicateChar(String s)
-    {
-        Set<Character> set = new HashSet<>();
-        for(int i = 0;i<s.length();i++){
-            if(!set.contains(s.charAt(i))){
-                set.add(s.charAt(i));
-            }else{
-                return true;
-            }
-        }
-        return false;
-    }
+
     public static int longestNonRepeatingSubString(String s)
     {
-        char[] str = s.toCharArray();
-        int resLength = 1;
-        for(int i = 0;i<s.length();i++){
-            for(int j = i+1;j<s.length();j++){
-                String substr = s.substring(i,j+1);
-                if(!hasDuplicateChar(substr)){
-                    if(substr.length() > resLength){
-                        resLength = substr.length();
+        class Solution {
+            public int lengthOfLongestSubstring(String s) {
+                Map<Character,Integer> map = new HashMap<>();
+                int l = 0;
+                int r = 0;
+                int n = s.length();
+                int len = 0;
+                while(r < n){
+                    if(map.containsKey(s.charAt(r))){
+                        l = Math.max(map.get(s.charAt(r)) +1,l);
                     }
+
+                    map.put(s.charAt(r),r);
+                    len = Math.max(len,r - l + 1);
+                    r++;
                 }
+
+                return len;
             }
         }
 
-        return resLength;
+
     }
     public static void main(String[] args)
     {
